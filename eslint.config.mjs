@@ -15,13 +15,9 @@ export default [
     ignores: ['webpack.common.js', 'webpack.dev.js', 'webpack.prod.js'],
   },
   {
-    "overrides": [
-      {
-        "files": ["tests/**/*"],
-        "env": {
-          "jest": true
-        }
-      }
-    ]
-  }
+    files: ["**/*.test.js"],
+    env: {
+      jest: true,
+    },
+  },
 ];
