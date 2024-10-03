@@ -65,15 +65,23 @@ export default class Gameboard {
 
     return true;
   }
-  
-  receiveAttack(x, y) {
-    // if out of bounds
+
+  isAttackValid(x, y) {
+    // Check if out of bounds
     if (x < 0 || y < 0 || x >= this.#board[0].length || y >= this.#board.length) return false;
 
     const cell = this.#board[y][x];
-    // if cell has already been hit
+    // Check if cell has already been hit
     if (cell.hit === true) return false;
+
+    return true; // Valid attack
+  } 
+  
+  receiveAttack(x, y) {
+    // Check if the attack is valid
+    if (!this.isAttackValid(x, y)) return false;
     
+    const cell = this.#board[y][x];
     // mark cell as hit
     cell.hit = true;
 
