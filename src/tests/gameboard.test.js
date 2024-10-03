@@ -37,7 +37,7 @@ describe('Gameboard class', () => {
       const destroyerLength = destroyer.getLength();
 
       for (let i = x; i < x + destroyerLength; i++) {
-        expect(gameboard.getBoard()[y][i]).toBe(destroyer);
+        expect(gameboard.getBoard()[y][i].ship).toBe(destroyer);
       }
     });
 
@@ -52,7 +52,7 @@ describe('Gameboard class', () => {
       const destroyerLength = destroyer.getLength();
 
       for (let i = y; i < y + destroyerLength; i++) {
-        expect(gameboard.getBoard()[i][x]).toBe(destroyer);
+        expect(gameboard.getBoard()[i][x].ship).toBe(destroyer);
       }
     });
 
@@ -70,7 +70,7 @@ describe('Gameboard class', () => {
     test('placeShip places ship correctly at last valid position', () => {
       expect(gameboard.placeShip(destroyer, 7, 0)).toBeTruthy();
       for (let i = 7; i < 10; i++) {
-        expect(gameboard.getBoard()[0][i]).toBe(destroyer);
+        expect(gameboard.getBoard()[0][i].ship).toBe(destroyer);
       }
     });
 
@@ -83,6 +83,6 @@ describe('Gameboard class', () => {
       expect(gameboard.placeShip(destroyer, 4, 5)).toBeFalsy();
       gameboard.switchAxis();
       expect(gameboard.placeShip(destroyer, 5, 4)).toBeFalsy();
-    })
+    });
   });
 });
