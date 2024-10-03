@@ -113,15 +113,29 @@ describe('Gameboard class', () => {
       expect(gameboard.receiveAttack(10, 10)).toBeFalsy();
     });
 
-    test('receiveAttack returns sunk if a ship has been sunk', () => {
+    test('receiveAttack returns "sunk" if a ship has been sunk', () => {
       const ship = new Ship(2);
-
+      const ship2 = new Ship(2);
       gameboard.placeShip(ship, 2, 2);
+      gameboard.placeShip(ship2, 2,3);
       
       gameboard.receiveAttack(2, 2);
       expect(gameboard.receiveAttack(3, 2)).toBe('sunk');
       
       expect(ship.isSunk()).toBeTruthy();
+    });
+
+    test('receiveAttack returns "all sunk" when all placed ships are sunk', () => {
+      const ship = new Ship(2);
+      const ship2 = new Ship(2);
+      gameboard.placeShip(ship, 2, 2);
+      gameboard.placeShip(ship2, 2,3);
+
+      gameboard.receiveAttack(2, 2);
+      expect(gameboard.receiveAttack(3, 2)).toBe('sunk');
+      gameboard.receiveAttack(2, 3);
+      expect(gameboard.receiveAttack(3, 3)).toBe('all sunk');
+      expect(gameboard.areAllShipsSunk()).toBeTruthy();
     });
   });
 });
