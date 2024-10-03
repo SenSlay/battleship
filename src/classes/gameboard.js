@@ -68,12 +68,18 @@ export default class Gameboard {
     // if out of bounds
     if (x < 0 || y < 0 || x >= this.#board[0].length || y >= this.#board.length) return false;
 
-    const cell = this.#board[x][y];
-    // If space has already been hit
+    const cell = this.#board[y][x];
+    // if cell has already been hit
     if (cell.hit === true) return false;
     
-    // If space contains ship, trigger hit
-    if (cell.ship !== null) cell.ship.hit(); 
-    this.#board[x][y].hit = true;
+    // mark cell as hit
+    cell.hit = true;
+
+    // if cell contains ship
+    if (cell.ship) {
+      cell.ship.hit(); 
+      // if ships is sunk
+      if (cell.ship.isSunk()) return 'sunk';
+    }
   }
 }
