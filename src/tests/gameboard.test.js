@@ -112,5 +112,16 @@ describe('Gameboard class', () => {
       expect(gameboard.receiveAttack(-1, 0)).toBeFalsy();
       expect(gameboard.receiveAttack(10, 10)).toBeFalsy();
     });
+
+    test('receiveAttack returns sunk if a ship has been sunk', () => {
+      const ship = new Ship(2);
+
+      gameboard.placeShip(ship, 2, 2);
+      
+      gameboard.receiveAttack(2, 2);
+      expect(gameboard.receiveAttack(3, 2)).toBe('sunk');
+      
+      expect(ship.isSunk()).toBeTruthy();
+    });
   });
 });
