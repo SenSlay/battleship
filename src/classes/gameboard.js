@@ -1,6 +1,7 @@
 export default class Gameboard {
   #axisPlacement;
   #board;
+  #ships = [];
 
   constructor() {
     this.#board = Array.from({ length: 10 }, () =>
@@ -60,6 +61,7 @@ export default class Gameboard {
         this.#board[i][x].ship = ship;
       }
     }
+    this.#ships.push(ship);
 
     return true;
   }
@@ -79,7 +81,17 @@ export default class Gameboard {
     if (cell.ship) {
       cell.ship.hit(); 
       // if ships is sunk
-      if (cell.ship.isSunk()) return 'sunk';
+      if (cell.ship.isSunk()) {
+        // if all ships are sunk
+        if (this.areAllShipsSunk()) return 'all sunk';
+
+        return 'sunk';
+      }
     }
+  }
+
+  // Check if all ships are sunk
+  areAllShipsSunk() {
+    return this.#ships.every(ship => ship.isSunk());
   }
 }
