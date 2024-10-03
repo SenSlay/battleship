@@ -4,7 +4,7 @@ export default class Gameboard {
 
   constructor() {
     this.#board = Array.from({ length: 10 }, () =>
-      Array.from({ length: 10 }, () => null),
+      Array.from({ length: 10 }, () => ({ ship: null, hit: false })),
     );
     this.#axisPlacement = 'x';
   }
@@ -38,9 +38,9 @@ export default class Gameboard {
 
       for (let i = x; i < x + ship.getLength(); i++) {
         // if space is already occupied
-        if (this.#board[y][i] !== null) return false;
+        if (this.#board[y][i].ship !== null) return false;
 
-        this.#board[y][i] = ship;
+        this.#board[y][i].ship = ship;
       }
     } else {
       // if out of bounds vertically
@@ -55,9 +55,9 @@ export default class Gameboard {
 
       for (let i = y; i < y + ship.getLength(); i++) {
         // if space is already occupied
-        if (this.#board[i][x] !== null) return false;
+        if (this.#board[i][x].ship !== null) return false;
 
-        this.#board[i][x] = ship;
+        this.#board[i][x].ship = ship;
       }
     }
 
