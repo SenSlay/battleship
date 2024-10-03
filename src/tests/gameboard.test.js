@@ -85,4 +85,32 @@ describe('Gameboard class', () => {
       expect(gameboard.placeShip(destroyer, 5, 4)).toBeFalsy();
     });
   });
+
+  describe('receiveAttack method', () => {
+    test('receiveAttack records an attack on the board', () => {
+      gameboard.receiveAttack(0, 0);
+
+      expect(gameboard.getBoard()[0][0].hit).toBeTruthy();
+    });
+
+    test('receiveAttack triggers hit on the ship if within the cell', () => {
+      gameboard.placeShip(new Ship(2), 2, 2);
+
+      gameboard.receiveAttack(2, 2);
+
+      expect(gameboard.getBoard()[2][2].ship.getHits()).toBe(1);
+      expect(gameboard.receiveAttack(2, 2)).toBeFalsy();
+    });
+
+    test('receiveAttack returns false if the attack is on an already hit space', () => {
+      gameboard.receiveAttack(0, 0);
+
+      expect(gameboard.receiveAttack(0, 0)).toBeFalsy();
+    });
+
+    test('receiveAttack returns false if the attack is out-of-bounds', () => {
+      expect(gameboard.receiveAttack(-1, 0)).toBeFalsy();
+      expect(gameboard.receiveAttack(10, 10)).toBeFalsy();
+    });
+  });
 });
