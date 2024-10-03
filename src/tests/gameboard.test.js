@@ -1,5 +1,5 @@
 import Gameboard from '../classes/gameboard';
-import { ships } from '../classes/ship';
+import Ship from '../classes/ship';
 
 describe('Gameboard class', () => {
   let gameboard;
@@ -26,7 +26,7 @@ describe('Gameboard class', () => {
 
     // Use destroyer ship (length: 3) for every test
     beforeEach(() => {
-      destroyer = ships['destroyer'];
+      destroyer = new Ship(3);
     });
 
     // test placeShip for x axis
@@ -56,6 +56,7 @@ describe('Gameboard class', () => {
       }
     });
 
+    // test for out of bounds
     test('placeShip returns false when ship goes out of bounds', () => {
       // test for out of bounds horizontally
       expect(gameboard.placeShip(destroyer, 8, 1)).toBeFalsy();
@@ -65,12 +66,23 @@ describe('Gameboard class', () => {
       expect(gameboard.placeShip(destroyer, 0, 9)).toBeFalsy();
     });
 
-    // Test successful placement at the last valid position
+    // test successful placement at the last valid position
     test('placeShip places ship correctly at last valid position', () => {
       expect(gameboard.placeShip(destroyer, 7, 0)).toBeTruthy();
       for (let i = 7; i < 10; i++) {
         expect(gameboard.getBoard()[0][i]).toBe(destroyer);
       }
     });
+
+    // teest for occupied spcaes
+    test('placeShip is falsy when placing ship in occupied spaces', () => {
+      gameboard.placeShip(destroyer, 5, 5);
+
+      expect(gameboard.placeShip(destroyer, 2, 5)).toBeTruthy();
+      expect(gameboard.placeShip(destroyer, 3, 5)).toBeFalsy();
+      expect(gameboard.placeShip(destroyer, 4, 5)).toBeFalsy();
+      gameboard.switchAxis();
+      expect(gameboard.placeShip(destroyer, 5, 4)).toBeFalsy();
+    })
   });
 });
