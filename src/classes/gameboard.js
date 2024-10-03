@@ -63,4 +63,17 @@ export default class Gameboard {
 
     return true;
   }
+  
+  receiveAttack(x, y) {
+    // if out of bounds
+    if (x < 0 || y < 0 || x >= this.#board[0].length || y >= this.#board.length) return false;
+
+    const cell = this.#board[x][y];
+    // If space has already been hit
+    if (cell.hit === true) return false;
+    
+    // If space contains ship, trigger hit
+    if (cell.ship !== null) cell.ship.hit(); 
+    this.#board[x][y].hit = true;
+  }
 }
