@@ -37,6 +37,9 @@ export default class Gameboard {
       }
 
       for (let i = x; i < x + ship.getLength(); i++) {
+        // if space is already occupied
+        if (this.#board[y][i] !== null) return false;
+
         this.#board[y][i] = ship;
       }
     } else {
@@ -51,6 +54,9 @@ export default class Gameboard {
       }
 
       for (let i = y; i < y + ship.getLength(); i++) {
+        // if space is already occupied
+        if (this.#board[i][x] !== null) return false;
+
         this.#board[i][x] = ship;
       }
     }
