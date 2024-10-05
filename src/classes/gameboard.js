@@ -22,45 +22,52 @@ export default class Gameboard {
     return this.#board;
   }
 
-  placeShip(ship, x, y) {
+  // Check if ship placement is valid
+  isShipPlacementValid(ship, x, y) {
     const boardWidth = this.#board[0].length;
     const boardHeight = this.#board.length;
 
     if (this.#axisPlacement === 'x') {
-      // if out of bounds horizontally
-      if (
-        y < 0 ||
-        y >= boardHeight ||
-        x < 0 ||
-        x + ship.getLength() - 1 >= boardWidth
-      ) {
-        return false;
-      }
+        // Check if out of bounds horizontally
+        if (y < 0 || y >= boardHeight || x < 0 || x + ship.getLength() - 1 >= boardWidth) {
+            return false;
+        }
 
+        // Check if any of the cells are already occupied
+        for (let i = x; i < x + ship.getLength(); i++) {
+            if (this.#board[y][i].ship !== null) return false;
+        }
+    } else {
+        // Check if out of bounds vertically
+        if (x < 0 || x >= boardWidth || y < 0 || y + ship.getLength() - 1 >= boardHeight) {
+            return false;
+        }
+
+        // Check if any of the cells are already occupied
+        for (let i = y; i < y + ship.getLength(); i++) {
+            if (this.#board[i][x].ship !== null) return false;
+        }
+    }
+
+    // If all checks pass, the placement is valid
+    return true;
+  }
+
+  placeShip(ship, x, y) {
+    // Use the validation method
+    if (!this.isShipPlacementValid(ship, x, y)) return false;
+
+    // If valid, place the ship
+    if (this.#axisPlacement === 'x') {
       for (let i = x; i < x + ship.getLength(); i++) {
-        // if space is already occupied
-        if (this.#board[y][i].ship !== null) return false;
-
         this.#board[y][i].ship = ship;
       }
     } else {
-      // if out of bounds vertically
-      if (
-        x < 0 ||
-        x >= boardWidth ||
-        y < 0 ||
-        y + ship.getLength() - 1 >= boardHeight
-      ) {
-        return false;
-      }
-
       for (let i = y; i < y + ship.getLength(); i++) {
-        // if space is already occupied
-        if (this.#board[i][x].ship !== null) return false;
-
         this.#board[i][x].ship = ship;
       }
     }
+    // Add the ship to the list of placed ships
     this.#ships.push(ship);
 
     return true;
@@ -93,9 +100,14 @@ export default class Gameboard {
         // if all ships are sunk
         if (this.areAllShipsSunk()) return 'all sunk';
 
+        // return when a ship is sunk
         return 'sunk';
       }
+      // return when hit but not sunk
+      return 'hit'; 
     }
+    // return when hit nothing
+    return 'miss';
   }
 
   // Check if all ships are sunk
