@@ -1,7 +1,7 @@
 import { HumanPlayer, ComputerPlayer } from "../classes/player";
 import Ship from "../classes/ship";
 
-describe('HumanPlayer class', () => { 
+describe('HumanPlayer subclass', () => { 
     let player;
 
     beforeEach(() => {
@@ -73,4 +73,77 @@ describe('HumanPlayer class', () => {
             expect(player.attack(1, 0, enemyGameboard)).toBe('all sunk');
         });
     });
+});
+
+describe('ComputerPlayer subclass', () => {
+	let computer;
+
+	beforeEach(() => {
+		computer = new ComputerPlayer();
+	});
+
+	describe('placeShip method', () => {
+		test('placeShip places a ship randomly', () => {
+			const ship = new Ship(2);
+			
+			computer.placeShip(ship);
+			let shipPlaced = false;
+	
+			const board = computer.getGameboard().getBoard();
+			// Iterate over the board and check if the ship has been placed
+			for (let row = 0; row < board.length; row++) {
+				for (let col = 0; col < board[row].length; col++) {
+					if (board[row][col].ship === ship) {
+						shipPlaced = true;
+						break;
+					}
+				}
+			}
+	
+			expect(shipPlaced).toBe(true);
+		});
+	});
+
+	describe('attack method', () => {
+		test('Computer makes a random attack on the board', () => {
+            const computer = new ComputerPlayer();
+            const enemyGameboard = new HumanPlayer().getGameboard();
+
+            const attackResult = computer.attack(enemyGameboard);
+
+            expect(attackResult).toBeDefined();
+		});
+
+        test('Computer does not attack the same spot twice', () => {
+            const computer = new ComputerPlayer();
+            const enemyGameboard = new HumanPlayer().getGameboard();
+            const availableMoves = computer.getAvailableMoves();
+            
+            const movesBefore = availableMoves.length;
+            computer.attack(enemyGameboard);
+            const movesAfter = availableMoves.length;
+    
+             // Check if the available moves reduced
+            expect(movesAfter).toBe(movesBefore - 1);
+        });
+
+        test('Computer attack registers hits and misses correctly', () => {
+            const computer = new ComputerPlayer();
+            const enemyGameboard = new HumanPlayer().getGameboard();
+            const ship = new Ship(2);
+    
+            enemyGameboard.placeShip(ship, 0, 0);
+    
+            let attackResult = computer.attack(enemyGameboard);
+            expect(['hit', 'miss']).toContain(attackResult); 
+    
+            if (attackResult === 'hit') {
+                expect(enemyGameboard.getBoard()[0][0].ship).toBe(ship);
+                expect(enemyGameboard.getBoard()[0][0].hit).toBe(true);
+            }
+    
+            attackResult = computer.attack(enemyGameboard);
+            expect(['hit', 'miss']).toContain(attackResult); 
+        });
+	});
 });
