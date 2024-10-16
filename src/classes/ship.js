@@ -1,9 +1,15 @@
 class Ship {
+  #name;
   #length;
   #hits = 0;
 
-  constructor(length) {
+  constructor(length, name) {
+    this.#name = name;
     this.#length = length;
+  }
+
+  getName() {
+    return this.#name;
   }
 
   getLength() {
