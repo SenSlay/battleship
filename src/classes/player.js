@@ -1,12 +1,21 @@
 import Gameboard from './gameboard';
+import Ship from './ship';
 
 class Player {
   #name;
   #gameboard;
+  #ships;
 
   constructor(name) {
     this.#name = name;
     this.#gameboard = new Gameboard();
+    this.#ships = [
+      new Ship(5, 'carrier'),
+      new Ship(4, 'battleship'),
+      new Ship(3, 'cruiser'),
+      new Ship(3, 'submarine'),
+      new Ship(2, 'destroyer'),
+    ];
   }
 
   getName() {
@@ -15,6 +24,10 @@ class Player {
 
   getGameboard() {
     return this.#gameboard;
+  }
+
+  getShips() {
+    return this.#ships;
   }
 }
 
@@ -58,17 +71,21 @@ class ComputerPlayer extends Player {
     return moves;
   }
 
-  placeShip(ship) {
-    let x, y;
-    const board = this.getGameboard().getBoard();
+  placeAllShips() {
+    const ships = this.getShips(); // Get the array of ships
 
-    do {
-      x = Math.floor(Math.random() * board[0].length);
-      y = Math.floor(Math.random() * board.length); 
-    } while (!this.getGameboard().isShipPlacementValid(ship, x, y));
+    ships.forEach((ship) => {
+      let x, y;
 
-    // Place ship once valid coordinates found
-    this.getGameboard().placeShip(ship, x, y);
+      // Try random coordinates until a valid position is found
+      do {
+        x = Math.floor(Math.random() * this.getGameboard().getBoard()[0].length);
+        y = Math.floor(Math.random() * this.getGameboard().getBoard().length); 
+      } while (!this.getGameboard().isShipPlacementValid(ship, x, y));
+
+      // Place the ship at the valid coordinates
+      this.getGameboard().placeShip(ship, x, y);
+    });
   }
 
   attack(enemyGameboard) {
