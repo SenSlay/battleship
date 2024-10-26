@@ -82,27 +82,31 @@ describe('ComputerPlayer subclass', () => {
 		computer = new ComputerPlayer();
 	});
 
-	describe('placeShip method', () => {
-		test('placeShip places a ship randomly', () => {
-			const ship = new Ship(2);
-			
-			computer.placeShip(ship);
-			let shipPlaced = false;
-	
-			const board = computer.getGameboard().getBoard();
-			// Iterate over the board and check if the ship has been placed
-			for (let row = 0; row < board.length; row++) {
-				for (let col = 0; col < board[row].length; col++) {
-					if (board[row][col].ship === ship) {
-						shipPlaced = true;
-						break;
-					}
-				}
-			}
-	
-			expect(shipPlaced).toBe(true);
-		});
-	});
+	describe('placeAllShips method', () => {
+        test('placeAllShips places all ships randomly on the board', () => {
+          computer.placeAllShips();
+          const board = computer.getGameboard().getBoard();
+          const ships = computer.getShips();
+          
+          // Track placed ships by checking each ship's presence on the board
+          let totalShipsPlaced = 0;
+      
+          // Iterate over each cell in the board
+          for (let row = 0; row < board.length; row++) {
+            for (let col = 0; col < board[row].length; col++) {
+              // Check if there's a ship in the current cell
+              if (board[row][col].ship !== null) {
+                totalShipsPlaced++;
+              }
+            }
+          }
+      
+          // Calculates the total number of cells all the ships should occupy
+          const totalExpectedLength = ships.reduce((sum, ship) => sum + ship.getLength(), 0);
+          // Ensure the correct number of ships were placed
+          expect(totalShipsPlaced).toBe(totalExpectedLength);
+        });
+      });
 
 	describe('attack method', () => {
 		test('Computer makes a random attack on the board', () => {
