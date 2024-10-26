@@ -10,11 +10,11 @@ class Player {
     this.#name = name;
     this.#gameboard = new Gameboard();
     this.#ships = [
-      new Ship(5, 'carrier'),
-      new Ship(4, 'battleship'),
-      new Ship(3, 'cruiser'),
-      new Ship(3, 'submarine'),
-      new Ship(2, 'destroyer'),
+      new Ship(5, 'Carrier'),
+      new Ship(4, 'Battleship'),
+      new Ship(3, 'Cruiser'),
+      new Ship(3, 'Submarine'),
+      new Ship(2, 'Destroyer'),
     ];
   }
 
@@ -28,6 +28,28 @@ class Player {
 
   getShips() {
     return this.#ships;
+  }
+
+  placeAllShips() {
+    // Get the array of ships
+    const ships = this.getShips();
+  
+    ships.forEach((ship) => {
+      let x, y;
+  
+      // Try random coordinates and axis until a valid position is found
+      do {
+        // Randomly switch between horizontal ('x') or vertical ('y') placement
+        if (Math.random() < 0.5) {
+          this.getGameboard().switchAxis(); 
+        }
+
+        x = Math.floor(Math.random() * this.getGameboard().getBoard()[0].length);
+        y = Math.floor(Math.random() * this.getGameboard().getBoard().length);
+      } while (!this.getGameboard().isShipPlacementValid(ship, x, y));
+      // Place the ship at the valid coordinates with the determined axis
+      this.getGameboard().placeShip(ship, x, y);
+    });
   }
 }
 
@@ -69,23 +91,6 @@ class ComputerPlayer extends Player {
       }
     }
     return moves;
-  }
-
-  placeAllShips() {
-    const ships = this.getShips(); // Get the array of ships
-
-    ships.forEach((ship) => {
-      let x, y;
-
-      // Try random coordinates until a valid position is found
-      do {
-        x = Math.floor(Math.random() * this.getGameboard().getBoard()[0].length);
-        y = Math.floor(Math.random() * this.getGameboard().getBoard().length); 
-      } while (!this.getGameboard().isShipPlacementValid(ship, x, y));
-
-      // Place the ship at the valid coordinates
-      this.getGameboard().placeShip(ship, x, y);
-    });
   }
 
   attack(enemyGameboard) {
