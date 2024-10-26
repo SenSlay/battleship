@@ -114,4 +114,16 @@ export default class Gameboard {
   areAllShipsSunk() {
     return this.#ships.every(ship => ship.isSunk());
   }
+
+  // Clear ships on the board
+  clearShips() {
+    this.#ships = []; // Clear the ships array
+    for (let row of this.#board) {
+      for (let cell of row) {
+        if (cell.ship) {  
+          cell.ship = null;
+        }
+      }
+    }
+  }
 }
