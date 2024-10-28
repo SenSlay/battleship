@@ -1,7 +1,8 @@
-import { handleShipPlacement, toggleAxis, gameboardHoverEffect } from "../eventHandlers/shipPlacementHandlers";
+import { initializeShipPlacementVariables, handleShipPlacement, toggleAxis, gameboardHoverEffect, controlHandlers, disableConfirmBtn, updateInstructionsHeading } from "../eventHandlers/shipPlacementHandlers";
 
 // Load ship placement grid
 const loadShipPlacement = () => {
+  initializeShipPlacementVariables();
   const mainCtn = document.querySelector('.main');
 
   // Clear main content
@@ -10,7 +11,6 @@ const loadShipPlacement = () => {
   // Create instructions heading el
   const instructionsHeading = document.createElement('h1');
   instructionsHeading.classList.add('instructions-heading');
-  instructionsHeading.textContent = 'Place your ship';
 
   // Create switch axis button
   const toggleAxisBtn = document.createElement('button');
@@ -37,14 +37,17 @@ const loadShipPlacement = () => {
 
   // Reset btn
   const resetBtn = document.createElement('button');
+  resetBtn.classList.add('reset-btn');
   resetBtn.textContent = 'Reset';
 
   // Randomize btn
   const randomizeBtn = document.createElement('button');
+  randomizeBtn.classList.add('randomize-btn')
   randomizeBtn.textContent = 'Randomize';
 
   // Confirm btn
   const confirmBtn = document.createElement('button');
+  confirmBtn.classList.add('confirm-btn')
   confirmBtn.textContent = 'Confirm'
 
   // Control btns container
@@ -65,6 +68,9 @@ const loadShipPlacement = () => {
  
   mainCtn.appendChild(shipPlacementCtn);
   gameboardHoverEffect();
+  controlHandlers();
+  disableConfirmBtn();
+  updateInstructionsHeading();
 };
 
 export default loadShipPlacement;
