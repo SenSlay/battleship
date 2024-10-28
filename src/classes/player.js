@@ -102,11 +102,16 @@ class ComputerPlayer extends Player {
     const randomIndex = Math.floor(Math.random() * this.#availableMoves.length);
     const { x, y } = this.#availableMoves[randomIndex];
 
-    // Remove the selected move from the available moves list
-    this.#availableMoves.splice(randomIndex, 1);
+    // Perform the attack
+    const result = enemyGameboard.receiveAttack(x, y);
+
+    // If the attack is valid, remove the move
+    if (result !== 'invalid') {
+      this.#availableMoves.splice(randomIndex, 1);
+    }
 
     // Perform the attack
-    return enemyGameboard.receiveAttack(x, y);
+    return {result, x, y};
   }
 }
 
