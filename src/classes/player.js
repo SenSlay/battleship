@@ -74,7 +74,7 @@ class ComputerPlayer extends Player {
   #availableMoves;
 
   constructor() {
-    super('Computer');
+    super('Enemy');
     this.#availableMoves = this.initializeAvailableMoves();
 	};
 
