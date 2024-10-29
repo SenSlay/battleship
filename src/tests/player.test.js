@@ -142,7 +142,7 @@ describe('ComputerPlayer subclass', () => {
       enemyGameboard.placeShip(ship, 0, 0);
 
       let attackResult = computer.attack(enemyGameboard);
-      expect(['hit', 'miss']).toContain(attackResult);
+      expect(['hit', 'miss']).toContain(attackResult.result);
 
       if (attackResult === 'hit') {
         expect(enemyGameboard.getBoard()[0][0].ship).toBe(ship);
@@ -150,7 +150,7 @@ describe('ComputerPlayer subclass', () => {
       }
 
       attackResult = computer.attack(enemyGameboard);
-      expect(['hit', 'miss']).toContain(attackResult);
+      expect(['hit', 'miss']).toContain(attackResult.result);
     });
   });
 });
