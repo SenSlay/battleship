@@ -57,12 +57,16 @@ export default class Gameboard {
     // Use the validation method
     if (!this.isShipPlacementValid(ship, x, y)) return false;
 
+    const axis = this.#axisPlacement;
+    ship.setAxis(axis);
+    ship.setPosition([x, y]);
+
     // If valid, place the ship
-    if (this.#axisPlacement === 'x') {
+    if (axis === 'x') {
       for (let i = x; i < x + ship.getLength(); i++) {
         this.#board[y][i].ship = ship;
       }
-    } else {
+    } else if (axis === 'y') {
       for (let i = y; i < y + ship.getLength(); i++) {
         this.#board[i][x].ship = ship;
       }
@@ -108,6 +112,24 @@ export default class Gameboard {
     }
     // return when hit nothing
     return 'miss';
+  }
+
+  // Method to get coordinates of the ship on the gameboard
+  getShipCoordinates(ship) {
+    if (!ship) return null;
+
+    const coordinates = [];
+    const [startX, startY] = ship.getPosition();
+
+    for (let i = 0; i < ship.getLength(); i++) {
+      if (ship.getAxis() === 'x') {
+        coordinates.push([startX + i, startY]); // Horizontal placement
+      } else {
+        coordinates.push([startX, startY + i]); // Vertical placement
+      }
+    }
+
+    return coordinates;
   }
 
   // Check if all ships are sunk
