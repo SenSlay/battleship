@@ -2,7 +2,7 @@ import { getGame } from '../classes/game';
 import loadGameStart from '../DOM/gameStart';
 import { highlightShips } from '../utils/DOMUtils';
 
-const DEFAULT_BTN_COLOR = 'rgb(236, 231, 231)'
+const DEFAULT_BTN_COLOR = 'rgb(236, 231, 231)';
 
 let game, playerOne, playerOneGameboard, ships;
 
@@ -11,7 +11,7 @@ export const initializeShipPlacementVariables = () => {
   playerOne = game.getPlayers()[0];
   playerOneGameboard = playerOne.getGameboard();
   ships = playerOne.getShips();
-}
+};
 
 let shipIndex = 0;
 let allShipsPlaced = false;
@@ -22,13 +22,13 @@ const disableConfirmBtn = () => {
     confirmBtn.style.backgroundColor = 'lightgray';
     confirmBtn.style.cursor = 'not-allowed';
   }
-}
+};
 
 const enableConfirmBtn = () => {
   const confirmBtn = document.querySelector('.confirm-btn');
   confirmBtn.style.backgroundColor = '#F0F0F0';
   confirmBtn.style.cursor = 'pointer';
-}
+};
 
 const updateInstructionsHeading = () => {
   const heading = document.querySelector('.instructions-heading');
@@ -37,7 +37,7 @@ const updateInstructionsHeading = () => {
     return;
   }
   heading.textContent = `Place your ${ships[shipIndex].getName()}:`;
-}
+};
 
 const handleShipPlacement = (event) => {
   const target = event.target;
@@ -47,7 +47,7 @@ const handleShipPlacement = (event) => {
     const x = parseInt(target.dataset.x);
     const y = parseInt(target.dataset.y);
     let currentShip = ships[shipIndex];
-    
+
     // Check if ship placement is valid
     if (!playerOneGameboard.isShipPlacementValid(currentShip, x, y)) {
       return;
@@ -56,9 +56,9 @@ const handleShipPlacement = (event) => {
     // If more ships to be placed
     if (shipIndex < ships.length) {
       playerOne.placeShip(currentShip, x, y);
-      shipIndex++;  
+      shipIndex++;
       updateInstructionsHeading();
-    } 
+    }
 
     // If all ships have been placed
     if (shipIndex >= ships.length) {
@@ -86,40 +86,40 @@ const applyShipClass = (btn, index, shipLength, axis) => {
     if (index === 0) {
       btn.classList.add('start-ship-x');
     } else if (index > 0 && index < shipLength - 1) {
-      btn.classList.add('mid-ship-x')
+      btn.classList.add('mid-ship-x');
     } else {
-      btn.classList.add('end-ship-x')
+      btn.classList.add('end-ship-x');
     }
   } else if (axis === 'y') {
     if (index === 0) {
       btn.classList.add('start-ship-y');
     } else if (index > 0 && index < shipLength - 1) {
-      btn.classList.add('mid-ship-y')
+      btn.classList.add('mid-ship-y');
     } else {
-      btn.classList.add('end-ship-y')
+      btn.classList.add('end-ship-y');
     }
   }
-}
+};
 
 const removeShipClass = (btn, index, shipLength, axis) => {
   if (axis === 'x') {
     if (index === 0) {
       btn.classList.remove('start-ship-x');
     } else if (index > 0 && index < shipLength - 1) {
-      btn.classList.remove('mid-ship-x')
+      btn.classList.remove('mid-ship-x');
     } else {
-      btn.classList.remove('end-ship-x')
+      btn.classList.remove('end-ship-x');
     }
   } else if (axis === 'y') {
     if (index === 0) {
       btn.classList.remove('start-ship-y');
     } else if (index > 0 && index < shipLength - 1) {
-      btn.classList.remove('mid-ship-y')
+      btn.classList.remove('mid-ship-y');
     } else {
-      btn.classList.remove('end-ship-y')
+      btn.classList.remove('end-ship-y');
     }
   }
-}
+};
 
 const gameboardHoverEffect = () => {
   const gameboard = document.querySelector('.gameboard');
@@ -135,12 +135,12 @@ const gameboardHoverEffect = () => {
       // If cell is invalid or contains a ship
       if (!playerOneGameboard.isShipPlacementValid(ships[shipIndex], x, y)) {
         target.style.cursor = 'not-allowed';
-        target.style.backgroundColor = 'red'
+        target.style.backgroundColor = 'red';
         return;
       }
-      
+
       const shipLength = ships[shipIndex].getLength();
-      const axis = playerOneGameboard.getAxisPlacement(); 
+      const axis = playerOneGameboard.getAxisPlacement();
 
       // If axis placement is x
       if (axis === 'x') {
@@ -151,7 +151,7 @@ const gameboardHoverEffect = () => {
           );
           applyShipClass(nextButton, i, shipLength, axis);
         }
-      // Else if axis placement is y
+        // Else if axis placement is y
       } else {
         for (let i = 0; i < shipLength; i++) {
           // Highlight where the ship can be placed
@@ -162,14 +162,14 @@ const gameboardHoverEffect = () => {
         }
       }
     }
-  })
+  });
 
   gameboard.addEventListener('mouseout', (event) => {
     if (shipIndex === ships.length) return;
     const target = event.target;
     const x = parseInt(target.dataset.x);
     const y = parseInt(target.dataset.y);
-  
+
     // If leaving a button
     if (target.tagName === 'BUTTON') {
       // If button was invalid, return style to default
@@ -178,25 +178,25 @@ const gameboardHoverEffect = () => {
         target.style.backgroundColor = DEFAULT_BTN_COLOR;
         return;
       }
-     
+
       const shipLength = ships[shipIndex].getLength();
-      const axis = playerOneGameboard.getAxisPlacement(); 
+      const axis = playerOneGameboard.getAxisPlacement();
 
       // If axis placement is x
       if (axis === 'x') {
         for (let i = 0; i < shipLength; i++) {
           const nextButton = document.querySelector(
-            `button[data-x="${x + i}"][data-y="${y}"]`
+            `button[data-x="${x + i}"][data-y="${y}"]`,
           );
           if (nextButton) {
             removeShipClass(nextButton, i, shipLength, axis);
           }
         }
-      // Else if axis placement is y
+        // Else if axis placement is y
       } else {
         for (let i = 0; i < ships[shipIndex].getLength(); i++) {
           const nextButton = document.querySelector(
-            `button[data-x="${x}"][data-y="${y + i}"]`
+            `button[data-x="${x}"][data-y="${y + i}"]`,
           );
           if (nextButton) {
             // Reset to default
@@ -215,12 +215,12 @@ const resetShipPlacement = () => {
   disableConfirmBtn();
   updateInstructionsHeading();
 
-  // Set gameboard UI back to default state 
+  // Set gameboard UI back to default state
   const gameboardBtns = document.querySelectorAll('.gameboard button');
-  gameboardBtns.forEach(btn => {
+  gameboardBtns.forEach((btn) => {
     btn.className = '';
-  })
-}
+  });
+};
 
 const controlHandlers = () => {
   const controlCtn = document.querySelector('.controls-ctn');
@@ -242,13 +242,20 @@ const controlHandlers = () => {
 
       // Reset shipIndex after random placement
       shipIndex = 5;
-    }
-    else if (target.closest('.confirm-btn')) {
+    } else if (target.closest('.confirm-btn')) {
       if (allShipsPlaced) {
         loadGameStart();
       }
     }
-  })
-}
+  });
+};
 
-export { handleShipPlacement, toggleAxis, gameboardHoverEffect, controlHandlers, disableConfirmBtn, updateInstructionsHeading, resetShipPlacement };
+export {
+  handleShipPlacement,
+  toggleAxis,
+  gameboardHoverEffect,
+  controlHandlers,
+  disableConfirmBtn,
+  updateInstructionsHeading,
+  resetShipPlacement,
+};

@@ -95,7 +95,7 @@ const loadGameStart = () => {
   const playerOneGameboard = getGame().getPlayers()[0].getGameboard();
   const friendlyBtns = document.querySelectorAll('.friendly-board button');
   highlightShips(playerOneGameboard, friendlyBtns);
-  
+
   // // Wall hacks
   // const playerTwoGameboard = getGame().getPlayers()[1].getGameboard();
   // const enemyBtns = document.querySelectorAll('.enemy-board button');

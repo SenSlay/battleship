@@ -33,18 +33,20 @@ class Player {
   placeAllShips() {
     // Get the array of ships
     const ships = this.getShips();
-  
+
     ships.forEach((ship) => {
       let x, y;
-  
+
       // Try random coordinates and axis until a valid position is found
       do {
         // Randomly switch between horizontal ('x') or vertical ('y') placement
         if (Math.random() < 0.5) {
-          this.getGameboard().switchAxis(); 
+          this.getGameboard().switchAxis();
         }
 
-        x = Math.floor(Math.random() * this.getGameboard().getBoard()[0].length);
+        x = Math.floor(
+          Math.random() * this.getGameboard().getBoard()[0].length,
+        );
         y = Math.floor(Math.random() * this.getGameboard().getBoard().length);
       } while (!this.getGameboard().isShipPlacementValid(ship, x, y));
       // Place the ship at the valid coordinates with the determined axis
@@ -59,7 +61,7 @@ class HumanPlayer extends Player {
   }
 
   // Place a ship on it's gameboard
-  placeShip(ship, x ,y) {
+  placeShip(ship, x, y) {
     const gameboard = this.getGameboard();
     return gameboard.placeShip(ship, x, y);
   }
@@ -76,7 +78,7 @@ class ComputerPlayer extends Player {
   constructor() {
     super('Enemy');
     this.#availableMoves = this.initializeAvailableMoves();
-	};
+  }
 
   getAvailableMoves() {
     return this.#availableMoves;
@@ -111,7 +113,7 @@ class ComputerPlayer extends Player {
     }
 
     // Perform the attack
-    return {result, x, y};
+    return { result, x, y };
   }
 }
 
