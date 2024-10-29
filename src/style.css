@@ -1,3 +1,9 @@
+:root {
+    /* Define ship color variables */
+    --blue-border: 2px solid blue;
+    --ship-background: rgb(197, 226, 238);
+}
+
 * {
     margin: 0;
     border: 0;
@@ -9,14 +15,18 @@ body {
     display: flex;
     height: 100vh;
     flex-direction: column;
-    background-color: rgb(74, 160, 234);
+    background-color: rgb(124, 194, 255);
 }
 
 header {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 20px;
+    font-size: 24px;
+    color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
 }
 
 main {
@@ -33,6 +43,9 @@ footer {
     align-items: center;
     padding: 20px 0px;
     gap: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
 }
 
 a {
@@ -45,20 +58,71 @@ a {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
     margin-bottom: 20px;
+    width: 400px;
+    height: 400px;
+    border: 2px solid rgb(55, 55, 55);
 }
 
 .gameboard button {
-    border: 1px solid white;
-    background-color: rgb(218, 208, 208);
-    width: 40px;
-    height: 40px;
+    border: 1px solid rgb(146, 143, 143);
+    background-color: rgb(236, 231, 231);
     cursor: pointer;
+    position: relative;
 }
 
-.gameboard button:hover {
-    background-color: lightgreen;
+/* Start of ship, X-axis */
+.gameboard .start-ship-x {
+    border-top: var(--blue-border);
+    border-bottom: var(--blue-border);
+    border-left: var(--blue-border);
+    border-right: var(--ship-background);
+    background-color: var(--ship-background)!important;
 }
 
+/* Middle of ship, X-axis */
+.gameboard .mid-ship-x {
+    border-top: var(--blue-border);
+    border-bottom: var(--blue-border);
+    border-left: var(--ship-background);
+    border-right: var(--ship-background);
+    background-color: var(--ship-background)!important;
+}
+
+/* End of ship, X-axis */
+.gameboard .end-ship-x {
+    border-top: var(--blue-border);
+    border-bottom: var(--blue-border);
+    border-left: var(--ship-background);
+    border-right: var(--blue-border);
+    background-color: var(--ship-background)!important;
+}
+
+/* Start of ship, Y-axis */
+.gameboard .start-ship-y {
+    border-top: var(--blue-border);
+    border-left: var(--blue-border);
+    border-right: var(--blue-border);
+    border-bottom: var(--ship-background);
+    background-color: var(--ship-background)!important;
+}
+
+/* Middle of ship, Y-axis */
+.gameboard .mid-ship-y {
+    border-top: var(--ship-background);
+    border-bottom: var(--ship-background);
+    border-left: var(--blue-border);
+    border-right: var(--blue-border);
+    background-color: var(--ship-background)!important;
+}
+
+/* End of ship, Y-axis */
+.gameboard .end-ship-y {
+    border-top: var(--ship-background);
+    border-bottom: var(--blue-border);
+    border-left: var(--blue-border);
+    border-right: var(--blue-border);
+    background-color: var(--ship-background)!important;
+}
 
 /* Ship placement styles */
 .ship-placement-ctn {
@@ -73,14 +137,18 @@ a {
     color: white;
     font-size: 34px;
     margin-bottom: 20px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
 }
 
-.toggle-axis {
+.toggle-axis, .controls-ctn button, .play-again-btn {
     padding: 10px;
     border-radius: 5px;    
     font-size: 16px;
     cursor: pointer;
     margin-bottom: 20px;
+    border: 1px solid black;
+    color: black;
 }
 
 .controls-ctn {
@@ -89,12 +157,118 @@ a {
     gap: 15px;
 }
 
-.controls-ctn button {
-    padding: 10px;
-    border-radius: 5px;    
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
+/* Game start styles */
+.friendly-ctn, .enemy-ctn {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
 }
 
+.board-label {
+    color: white;
+    text-transform: uppercase;
+    font: 14px;
+}
+
+.friendly-label {
+    color: rgb(20, 62, 179);
+}
+
+.enemy-label {
+    color: red;
+}
+
+.game-start-ctn .instructions-heading {
+    text-align: center;
+}
+
+.gameboards-ctn {
+    display: flex; 
+    gap: 5vw;
+}
+
+.winner-ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.winner-heading {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.miss::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -4px;
+    border-radius: 50%;
+    background-color: #000000a9;
+}
+
+.hit {
+    border: 2px solid red!important;
+    margin: 0;
+}
+
+.hit::after {
+    content: "✕";
+    color: red;
+    
+    font-size: 2em;
+    font-weight: 600;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal styles */
+.modal {
+    display: block; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+  
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    max-width: 200px;
+    margin: 15% auto; 
+    border: 1px solid #888;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.modal-content * {
+    color: black;
+    margin: 0;
+}
+
+.modal-content .winner-heading {
+    margin-bottom: 10px;
+}
+
+/* Media Queries */
+@media only screen and (max-width: 854px) {
+    .gameboards-ctn {
+        flex-direction: column-reverse;
+        justify-content: center;
+        text-align: center;
+    }
+}
 
