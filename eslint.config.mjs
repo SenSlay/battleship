@@ -14,6 +14,15 @@ export default [
     rules: {
       'no-unused-vars': 'warn',
       'no-undef': 'warn',
+      "capitalized-comments": [
+      "warn", 
+      "always", 
+      {
+        "ignorePattern": "pragma|ignored", 
+        "ignoreInlineComments": true,
+        "ignoreConsecutiveComments": true
+      }
+      ]
     },
   },
   {
