@@ -3,12 +3,9 @@ import {
   handleAttack,
   initializeGameStartVariables,
 } from '../eventHandlers/gameStartHandlers';
-import { SHIP_COLOR } from '../utils/constants';
+import { highlightShips } from '../utils/DOMUtils';
 
 const loadGameStart = () => {
-  const playerOneBoard = getGame().getPlayers()[0].getGameboard().getBoard();
-  const playerTwoBoard = getGame().getPlayers()[1].getGameboard().getBoard();
-
   initializeGameStartVariables();
   const mainCtn = document.querySelector('.main');
 
@@ -53,33 +50,22 @@ const loadGameStart = () => {
       const friendlyButton = document.createElement('button');
       friendlyButton.dataset.x = j;
       friendlyButton.dataset.y = i;
-
-      // Highlight cells with ships placed
-      if (playerOneBoard[i][j].ship !== null) {
-        friendlyButton.style.backgroundColor = SHIP_COLOR;
-      }
       friendlyGameboard.appendChild(friendlyButton);
 
       // Create and append a button for enemyGameboard
       const enemyButton = document.createElement('button');
       enemyButton.dataset.x = j;
       enemyButton.dataset.y = i;
-
-      // Highlight cells with ships placed
-      if (playerTwoBoard[i][j].ship !== null) {
-        enemyButton.style.backgroundColor = SHIP_COLOR;
-      }
-
       enemyGameboard.appendChild(enemyButton);
     }
   }
 
   const friendlyBoardLabel = document.createElement('h2');
-  friendlyBoardLabel.classList.add('board-label');
+  friendlyBoardLabel.classList.add('board-label', 'friendly-label');
   friendlyBoardLabel.textContent = 'Friendly Waters';
 
   const enemyBoardLabel = document.createElement('h2');
-  enemyBoardLabel.classList.add('board-label');
+  enemyBoardLabel.classList.add('board-label', 'enemy-label');
   enemyBoardLabel.textContent = 'Enemy Waters';
 
   const friendlyCtn = document.createElement('div');
@@ -103,8 +89,17 @@ const loadGameStart = () => {
   gameStartCtn.classList.add('game-start-ctn');
 
   gameStartCtn.appendChild(gameboardsCtn);
-
   mainCtn.appendChild(gameStartCtn);
+
+  // Highlight cells with ships
+  const playerOneGameboard = getGame().getPlayers()[0].getGameboard();
+  const friendlyBtns = document.querySelectorAll('.friendly-board button');
+  highlightShips(playerOneGameboard, friendlyBtns);
+  
+  // // Wall hacks
+  // const playerTwoGameboard = getGame().getPlayers()[1].getGameboard();
+  // const enemyBtns = document.querySelectorAll('.enemy-board button');
+  // highlightShips(playerTwoGameboard, enemyBtns)
 };
 
 export default loadGameStart;
