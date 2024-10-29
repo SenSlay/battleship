@@ -60,11 +60,11 @@ a {
   margin-bottom: 20px;
   width: 400px;
   height: 400px;
-  border: 2px solid rgb(55, 55, 55);
+  border: 2px solid rgb(170, 165, 165);
 }
 
 .gameboard button {
-  border: 1px solid rgb(146, 143, 143);
+  border: 1px solid rgb(170, 165, 165);
   background-color: rgb(236, 231, 231);
   cursor: pointer;
   position: relative;
@@ -134,11 +134,9 @@ a {
 }
 
 .instructions-heading {
-  color: white;
+  color: rgb(255, 255, 255);
   font-size: 34px;
   margin-bottom: 20px;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
 }
 
 .toggle-axis,
@@ -200,6 +198,10 @@ a {
 .winner-heading {
   color: white;
   margin-bottom: 10px;
+}
+
+.enemy-board button:hover {
+    background-color: rgb(206, 199, 199);
 }
 
 .miss::after {
