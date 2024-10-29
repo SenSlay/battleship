@@ -4,7 +4,7 @@ class Game {
     #players = [];
     #activePlayer;
 
-    constructor(playerOneName = 'Player One') {
+    constructor(playerOneName = 'Friendly') {
         this.#players.push(new HumanPlayer(playerOneName));
         this.#players.push(new ComputerPlayer());
         this.#activePlayer = this.#players[0];
