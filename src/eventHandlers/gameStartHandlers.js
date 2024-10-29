@@ -1,5 +1,6 @@
 import { getGame } from "../classes/game";
 import { createWinnerDisplayCtn } from "../utils/DOMUtils";
+import loadWinnerModal from "../DOM/winnerModal";
 
 let game, friendly, friendlyGameboard, enemy, enemyGameboard, winner;
 
@@ -33,6 +34,9 @@ const applyAttackEffect = (attackStatus, button, heading) => {
 		const winnerCtn = createWinnerDisplayCtn(winner);
 		const mainCtn = document.querySelector('.main');
 		mainCtn.prepend(winnerCtn)
+
+		// Display modal
+		loadWinnerModal(winner)
 	}
 }
 
