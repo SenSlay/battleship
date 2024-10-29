@@ -2,6 +2,8 @@ class Ship {
   #name;
   #length;
   #hits = 0;
+  #axis;
+  #position;
 
   constructor(length, name) {
     this.#name = name;
@@ -18,6 +20,22 @@ class Ship {
 
   getHits() {
     return this.#hits;
+  }
+
+  setAxis(axis) {
+    this.#axis = axis;
+  }
+
+  getAxis() {
+    return this.#axis;
+  }
+
+  setPosition(coord) {
+    this.#position = coord;
+  }
+
+  getPosition() {
+    return this.#position;
   }
 
   hit() {
