@@ -1,3 +1,4 @@
 import './style.css';
+import loadShipPlacement from './DOM/shipPlacement';
 
-console.log('Hello world');
+loadShipPlacement();
