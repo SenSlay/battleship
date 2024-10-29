@@ -15,19 +15,17 @@ export const initializeGameStartVariables = () => {
 
 const applyAttackEffect = (attackStatus, button, heading) => {
 	if (attackStatus === 'miss') {
-		button.textContent = 'O';
 		heading.textContent = 'Missed attack!';
-	} else if (attackStatus === 'hit') {
-		button.style.backgroundColor = 'red';
-		button.textContent = 'X';
+		button.classList.add('miss');
+		return;
+	} 
+	
+	button.classList.add('hit');
+	if (attackStatus === 'hit') {
 		heading.textContent = `Ship hit!`;
 	} else if (attackStatus === 'sunk') {
-		button.style.backgroundColor = 'red';
-		button.textContent = 'X';
 		heading.textContent = `Ship sunk!`;
 	} else if (attackStatus === 'all sunk') {
-		button.style.backgroundColor = 'red';
-		button.textContent = 'X';
 		heading.textContent = `All ships sunk!`;
 
 		winner = game.checkWinner().getName();
