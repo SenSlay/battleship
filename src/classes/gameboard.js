@@ -104,24 +104,24 @@ export default class Gameboard {
     if (!this.isAttackValid(x, y)) return false;
 
     const cell = this.#board[y][x];
-    // mark cell as hit
+    // Mark cell as hit
     cell.hit = true;
 
-    // if cell contains ship
+    // If cell contains ship
     if (cell.ship) {
       cell.ship.hit();
-      // if ships is sunk
+      // If ships is sunk
       if (cell.ship.isSunk()) {
-        // if all ships are sunk
+        // If all ships are sunk
         if (this.areAllShipsSunk()) return 'all sunk';
 
-        // return when a ship is sunk
+        // Return when a ship is sunk
         return 'sunk';
       }
-      // return when hit but not sunk
+      // Return when hit but not sunk
       return 'hit';
     }
-    // return when hit nothing
+    // Return when hit nothing
     return 'miss';
   }
 

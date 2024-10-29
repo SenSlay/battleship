@@ -9,14 +9,14 @@ describe('Gameboard class', () => {
   });
 
   test('switchAxis switches AxisPlacement correctly', () => {
-    // initial axis should be x
+    // Initial axis should be x
     expect(gameboard.getAxisPlacement()).toBe('x');
 
-    // switch axis to y
+    // Switch axis to y
     gameboard.switchAxis();
     expect(gameboard.getAxisPlacement()).toBe('y');
 
-    // switch axis back to x
+    // Switch axis back to x
     gameboard.switchAxis();
     expect(gameboard.getAxisPlacement()).toBe('x');
   });
@@ -29,7 +29,7 @@ describe('Gameboard class', () => {
       destroyer = new Ship(3);
     });
 
-    // test placeShip for x axis
+    // Test placeShip for x axis
     test('placeShip places the ship horizontally on the board correctly', () => {
       const x = 1;
       const y = 0;
@@ -41,9 +41,9 @@ describe('Gameboard class', () => {
       }
     });
 
-    // test placeShip for y axis
+    // Test placeShip for y axis
     test('placeShip places the ship vertically on the board correctly', () => {
-      // switch to y axis
+      // Switch to y axis
       gameboard.switchAxis();
 
       const x = 1;
@@ -56,17 +56,17 @@ describe('Gameboard class', () => {
       }
     });
 
-    // test for out of bounds
+    // Test for out of bounds
     test('placeShip returns false when ship goes out of bounds', () => {
-      // test for out of bounds horizontally
+      // Test for out of bounds horizontally
       expect(gameboard.placeShip(destroyer, 8, 1)).toBeFalsy();
 
-      // test for out of bounds vertically
+      // Test for out of bounds vertically
       gameboard.switchAxis();
       expect(gameboard.placeShip(destroyer, 0, 9)).toBeFalsy();
     });
 
-    // test successful placement at the last valid position
+    // Test successful placement at the last valid position
     test('placeShip places ship correctly at last valid position', () => {
       expect(gameboard.placeShip(destroyer, 7, 0)).toBeTruthy();
       for (let i = 7; i < 10; i++) {
@@ -74,7 +74,7 @@ describe('Gameboard class', () => {
       }
     });
 
-    // teest for occupied spcaes
+    // Teest for occupied spcaes
     test('placeShip is falsy when placing ship in occupied spaces', () => {
       gameboard.placeShip(destroyer, 5, 5);
 

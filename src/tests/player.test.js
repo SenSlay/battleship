@@ -58,10 +58,10 @@ describe('HumanPlayer subclass', () => {
 
     test('an invalid attack returns false', () => {
       player.attack(0, 0, enemyGameboard);
-      // attacking an already hit space
+      // Attacking an already hit space
       expect(player.attack(0, 0, enemyGameboard)).toBeFalsy();
 
-      // out of bounds
+      // Out of bounds
       expect(player.attack(-1, 0, enemyGameboard)).toBeFalsy();
       expect(player.attack(0, 11, enemyGameboard)).toBeFalsy();
     });
